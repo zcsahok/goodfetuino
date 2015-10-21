@@ -28,10 +28,10 @@ Pinout and connections
 |:-------:|:------:|:-----:|
 | A0      | PC0    |  TST  |
 | A1      | PC1    |  RST  |
-| A2      | PC2    |  RST  |
-| A3      | PC3    |  RST  |
-| A4      | PC4    |  RST  |
-| A5      | PC5    |  RST  |
+| A2      | PC2    |  TCK  |
+| A3      | PC3    |  TMS  |
+| A4      | PC4    |  TDI  |
+| A5      | PC5    |  TDO  |
 | GND     | GND    |  GND  |
 
 Using the analog pins has the advantage that the spacing between the headers
