@@ -120,56 +120,90 @@ uint32_t jtag_get_device_id(int chip);
 //=== Arduino pins
 #include <avr/io.h>
 
+#ifdef __AVR_ATmega88__
+
+#define TMS (1<<PD7)
+#define TDI (1<<PB0)
+#define TDO (1<<PB1)
+#define TCK (1<<PD6)
+#define RST (1<<PD5)
+#define TST (1<<PD4)
+
+#define TMSOUT  PORTD
+#define TDIOUT  PORTB
+#define TDOOUT  PORTB
+#define TCKOUT  PORTD
+#define RSTOUT  PORTD
+#define TSTOUT  PORTD
+
+#define TMSDIR  DDRD
+#define TDIDIR  DDRB
+#define TDODIR  DDRB
+#define TCKDIR  DDRD
+#define RSTDIR  DDRD
+#define TSTDIR  DDRD
+
+#define SPIIN   PINB
+
+#else
+
 #define TMS (1<<PC3)
 #define TDI (1<<PC4)
 #define TDO (1<<PC5)
 #define TCK (1<<PC2)
+#define RST (1<<PC1)
+#define TST (1<<PC0)
+
+#define TMSOUT  PORTC
+#define TDIOUT  PORTC
+#define TDOOUT  PORTC
+#define TCKOUT  PORTC
+#define RSTOUT  PORTC
+#define TSTOUT  PORTC
+
+#define TMSDIR  DDRC
+#define TDIDIR  DDRC
+#define TDODIR  DDRC
+#define TCKDIR  DDRC
+#define RSTDIR  DDRC
+#define TSTDIR  DDRC
+
+#define SPIIN   PINC
+
+#endif
 
 #define TCLK TDI
-
 #define MOSI TDI
 #define MISO TDO
 #define SCK  TCK
 
-#define RST (1<<PC1)
-#define TST (1<<PC0)
-
-#define SPIOUT PORTC
-#define P4OUT PORTC
-#define P2OUT PORTC
-#define P5OUT PORTC
-
-#define P2DIR DDRC
-#define P4DIR DDRC
-#define P5DIR DDRC
-
-#define SPIIN PINC
+#define TCLKOUT TDIOUT
 
 //===
 
-#define SETMOSI SPIOUT|=MOSI
-#define CLRMOSI SPIOUT&=~MOSI
-#define SETCLK SPIOUT|=SCK
-#define CLRCLK SPIOUT&=~SCK
+#define SETMOSI TDIOUT|=MOSI
+#define CLRMOSI TDIOUT&=~MOSI
+//#define SETCLK TCKOUT|=SCK
+//#define CLRCLK TCKOUT&=~SCK
 #define READMISO (SPIIN&MISO?1:0)
-#define SETTMS SPIOUT|=TMS
-#define CLRTMS SPIOUT&=~TMS
-#define SETTCK SPIOUT|=TCK
-#define CLRTCK SPIOUT&=~TCK
-#define SETTDI SPIOUT|=TDI
-#define CLRTDI SPIOUT&=~TDI
+#define SETTMS TMSOUT|=TMS
+#define CLRTMS TMSOUT&=~TMS
+#define SETTCK TCKOUT|=TCK
+#define CLRTCK TCKOUT&=~TCK
+#define SETTDI TDIOUT|=TDI
+#define CLRTDI TDIOUT&=~TDI
 
-#define SETTST P4OUT|=TST
-#define CLRTST P4OUT&=~TST
-#define SETRST P2OUT|=RST
-#define CLRRST P2OUT&=~RST
+#define SETTST TSTOUT|=TST
+#define CLRTST TSTOUT&=~TST
+#define SETRST RSTOUT|=RST
+#define CLRRST RSTOUT&=~RST
 
 #define SETTCLK SETTDI
 #define CLRTCLK CLRTDI
 
 extern int savedtclk;
-#define SAVETCLK savedtclk=SPIOUT&TCLK;
-#define RESTORETCLK if(savedtclk) SPIOUT|=TCLK; else SPIOUT&=~TCLK
+#define SAVETCLK savedtclk=TCLKOUT&TCLK;
+#define RESTORETCLK if(savedtclk) TCLKOUT|=TCLK; else TCLKOUT&=~TCLK
 
 //JTAG commands
 #define JTAG_IR_SHIFT 0x80

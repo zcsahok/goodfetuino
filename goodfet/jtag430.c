@@ -343,7 +343,7 @@ unsigned char jtag430x2_start(){
   SETTST;
   msdelay(10);//5
   SETRST;
-  P5DIR&=~RST;
+  RSTDIR &= ~RST;
   
   delay(0xFFFF);
   
@@ -372,7 +372,7 @@ void jtag430_start(){
   SETTST;
   delay(50);  //50
   SETRST;
-  P5DIR&=~RST;
+  RSTDIR &= ~RST;
   delay(0xFFFF);
   #endif
   

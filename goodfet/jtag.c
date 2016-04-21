@@ -109,10 +109,13 @@ void jtag_reset_tap()
 //! Set up the pins for JTAG mode.
 void jtag_setup()
 {
-	P5DIR|=MOSI+SCK+TMS;
-	P5DIR&=~MISO;
-	P4DIR|=TST;
-	P2DIR|=RST;
+        TDIDIR |= TDI; // MOSI
+        TCKDIR |= TCK; // SCK
+        TMSDIR |= TMS; // TMS
+	TDODIR &= ~MISO;
+        TDOOUT |= TDO; // pull-up MISO
+	TSTDIR |= TST;
+	RSTDIR |= RST;
 	msdelay(100);
 	jtag_state = UNKNOWN;
 }
@@ -120,11 +123,12 @@ void jtag_setup()
 //! Stop JTAG, release pins
 void jtag_stop()
 {
-	P5OUT=0;
-	P4OUT=0;
-//==
-        P5DIR = 0;  // all pins input
-//==
+        // all pins input
+        TDIDIR &= ~TDI; // MOSI
+        TCKDIR &= ~TCK; // SCK
+        TMSDIR &= ~TMS; // TMS
+	TSTDIR &= ~TST;
+	RSTDIR &= ~RST;
 }
 
 //! Get into Shift-IR or Shift-DR state
