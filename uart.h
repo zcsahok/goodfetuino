@@ -98,13 +98,13 @@ Date        Description
  *  @param  xtalcpu  system clock in Mhz, e.g. 4000000L for 4Mhz          
  *  @param  baudrate baudrate in bps, e.g. 1200, 2400, 9600     
  */
-#define UART_BAUD_SELECT(baudRate,xtalCpu) ((xtalCpu)/((baudRate)*16l)-1)
+#define UART_BAUD_SELECT(baudRate,xtalCpu) ((xtalCpu+(baudRate)*8l)/((baudRate)*16l)-1)
 
 /** @brief  UART Baudrate Expression for ATmega double speed mode
  *  @param  xtalcpu  system clock in Mhz, e.g. 4000000L for 4Mhz           
  *  @param  baudrate baudrate in bps, e.g. 1200, 2400, 9600     
  */
-#define UART_BAUD_SELECT_DOUBLE_SPEED(baudRate,xtalCpu) (((xtalCpu)/((baudRate)*8l)-1)|0x8000)
+#define UART_BAUD_SELECT_DOUBLE_SPEED(baudRate,xtalCpu) (((xtalCpu+(baudRate)*4l)/((baudRate)*8l)-1)|0x8000)
 
 
 /** Size of the circular receive buffer, must be power of 2 */
