@@ -401,7 +401,7 @@ void jtag430_stop(){
   SETRST;
   //P5DIR&=~RST;
   //delay(0xFFFF);
-  
+  jtag_stop();
 }
 
 //! Set CPU to Instruction Fetch
