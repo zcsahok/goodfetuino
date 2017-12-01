@@ -38,7 +38,7 @@ Using the analog pins has the advantage that the spacing between the headers
 is 0.1" allowing the use of a single male plug for connections.
 All lines have nominally 220 ohm resistors in series.
 
-See also [schematic_bb.png](https://github.com/zcsahok/goodfetuino/blob/master/schematic_bb.png)
+See also [schematic_bb.png](blob/master/schematic_bb.png)
 
 **NOTE:** MSP430 devices run from 3.3 V. Do not use a 5 V Arduino as it
 stresses the chip beyond the max ratings. Even though it may not
